@@ -7,6 +7,14 @@ import os from 'node:os'
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+// Import iohook-raub in the main process where Node.js globals are available
+let iohook: any = null;
+try {
+  iohook = require('iohook-raub');
+} catch (error) {
+  console.error('Failed to load iohook-raub:', error);
+}
+
 // The built directory structure
 //
 // ├─┬ dist-electron
@@ -78,7 +86,57 @@ async function createWindow() {
   // win.webContents.on('will-navigate', (event, url) => { }) #344
 }
 
-app.whenReady().then(createWindow)
+// Setup iohook event listeners
+function setupIohook() {
+  if (!iohook) {
+    console.warn('iohook-raub not available');
+    return;
+  }
+
+  iohook.on('keydown', (msg: any) => {
+    console.log('keydown', msg);
+    // Send keyboard events to renderer process
+    if (win) {
+      win.webContents.send('iohook-keydown', msg);
+    }
+  });
+
+  iohook.on('mousewheel', (msg: any) => {
+    console.log('mousewheel', msg);
+    if (win) {
+      win.webContents.send('iohook-mousewheel', msg);
+    }
+  });
+
+  iohook.on('mousedrag', () => {
+    console.log('mousedrag');
+    if (win) {
+      win.webContents.send('iohook-mousedrag');
+    }
+  });
+
+  iohook.on('mousedown', (msg: any) => {
+    console.log('mousedown', msg);
+    if (win) {
+      win.webContents.send('iohook-mousedown', msg);
+    }
+  });
+
+  iohook.on('mouseup', (msg: any) => {
+    console.log('mouseup', msg);
+    if (win) {
+      win.webContents.send('iohook-mouseup', msg);
+    }
+  });
+
+  // Start listening for events
+  iohook.start();
+}
+
+app.whenReady().then(() => {
+  createWindow();
+  setupIohook();
+})
 
 app.on('window-all-closed', () => {
   win = null

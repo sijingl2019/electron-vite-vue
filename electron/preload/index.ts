@@ -23,6 +23,28 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   // ...
 })
 
+// Expose iohook events to renderer process
+contextBridge.exposeInMainWorld('iohook', {
+  onKeydown: (callback: (msg: any) => void) => {
+    return ipcRenderer.on('iohook-keydown', (event, msg) => callback(msg))
+  },
+  onMousewheel: (callback: (msg: any) => void) => {
+    return ipcRenderer.on('iohook-mousewheel', (event, msg) => callback(msg))
+  },
+  onMousedrag: (callback: () => void) => {
+    return ipcRenderer.on('iohook-mousedrag', () => callback())
+  },
+  onMousedown: (callback: (msg: any) => void) => {
+    return ipcRenderer.on('iohook-mousedown', (event, msg) => callback(msg))
+  },
+  onMouseup: (callback: (msg: any) => void) => {
+    return ipcRenderer.on('iohook-mouseup', (event, msg) => callback(msg))
+  },
+  removeAllListeners: (channel: string) => {
+    return ipcRenderer.removeAllListeners(channel)
+  }
+})
+
 // --------- Preload scripts loading ---------
 function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
   return new Promise((resolve) => {
