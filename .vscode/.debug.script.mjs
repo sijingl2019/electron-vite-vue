@@ -15,9 +15,10 @@ fs.writeFileSync(path.join(__dirname, '.debug.env'), envContent.join('\n'))
 spawn(
   // TODO: terminate `npm run dev` when Debug exits.
   process.platform === 'win32' ? 'npm.cmd' : 'npm',
-  ['run', 'dev'],
+  ['run', 'dev:renderer'],
   {
     stdio: 'inherit',
     env: Object.assign(process.env, { VSCODE_DEBUG: 'true' }),
+    shell: true,
   },
 )
