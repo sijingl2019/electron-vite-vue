@@ -44,14 +44,24 @@ export default defineConfig(({ command }) => {
         preload: {
           // Shortcut of `build.rollupOptions.input`.
           // Preload scripts may contain Web assets, so use the `build.rollupOptions.input` instead `build.lib.entry`.
-          input: 'electron/preload/index.ts',
+          input: [
+            'electron/preload/index.ts',
+            'electron/preload/panel.ts'
+          ],
           vite: {
             build: {
               sourcemap: sourcemap ? 'inline' : undefined, // #332
               minify: isBuild,
               outDir: 'dist-electron/preload',
               rollupOptions: {
+                input: [
+                  'electron/preload/index.ts',
+                  'electron/preload/panel.ts'
+                ],
                 external: Object.keys('dependencies' in pkg ? pkg.dependencies : {}),
+                output: {
+                  inlineDynamicImports: false,
+                },
               },
             },
           },
@@ -62,6 +72,11 @@ export default defineConfig(({ command }) => {
         renderer: {},
       }),
     ],
+    resolve: {
+      alias: {
+        // 'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js'
+      }
+    },
     server: process.env.VSCODE_DEBUG && (() => {
       const url = new URL(pkg.debug.env.VITE_DEV_SERVER_URL)
       return {

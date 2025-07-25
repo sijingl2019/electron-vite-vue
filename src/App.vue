@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './views/HelloWorld.vue'
+import MainBoard from './views/MainBoard.vue'
 </script>
 
 <template>
-  <div>
+  <!-- <div>
     <a href="https://www.electronjs.org/" target="_blank">
       <img src="./assets/electron.svg" class="logo electron" alt="Electron logo" />
     </a>
@@ -18,7 +19,8 @@ import HelloWorld from './components/HelloWorld.vue'
   <div class="flex-center">
     Place static files into the <code>/public</code> folder
     <img style="width: 2.4em; margin-left: .4em;" src="/logo.svg" alt="Logo">
-  </div>
+  </div> -->
+  <MainBoard />
 </template>
 
 <style>

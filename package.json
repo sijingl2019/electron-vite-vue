@@ -2,8 +2,8 @@
   "name": "electron-vue-vite",
   "version": "28.1.0",
   "main": "dist-electron/main/index.js",
-  "description": "Really simple Electron + Vue + Vite boilerplate.",
-  "author": "草鞋没号 <308487730@qq.com>",
+  "description": "Qiko Now.",
+  "author": "kingo <523697259@qq.com>",
   "license": "MIT",
   "private": true,
   "keywords": [
@@ -15,13 +15,14 @@
   ],
   "debug": {
     "env": {
-      "VITE_DEV_SERVER_URL": "http://127.0.0.1:3344/"
+      "VITE_DEV_SERVER_URL": "http://127.0.0.1:3344/",
+      "VSCODE_DEBUG": "true"
     }
   },
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:renderer": "set VSCODE_DEBUG=true && npm run dev",
+    "dev:renderer": "npm run dev",
     "build": "vue-tsc --noEmit && vite build && electron-builder",
     "preview": "vite preview"
   },
@@ -42,8 +43,23 @@
     "vite-plugin-electron-renderer": "^0.14.5",
     "vue": "^3.4.21",
     "vue-tsc": "^2.0.6",
+    "vue-i18n": "9.2.2",
+    "vue-router": "^4.0.0-0",
+    "vue3-lottie": "^3.1.0",
+    "vuex": "^4.0.0-0",
+    "ant-design-vue": "3.2.14",
     "express": "^4.21.2",
     "cors": "^1.0.1",
-    "cross-spawn": "^7.0.3"
+    "cross-spawn": "^7.0.3",
+    "pinyin-match": "^1.2.4",
+    "pouchdb": "^7.2.2",
+    "pouchdb-load": "^1.4.6",
+    "pouchdb-replication-stream": "^1.2.9",
+    "markdown-it": "^12.2.0",
+    "webdav": "4.11.3",
+    "less": "^3.0.4",
+    "memorystream": "^0.3.1",
+    "uuid": "^9.0.0",
+    "electron-log": "^4.4.1"
   }
 }

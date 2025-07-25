@@ -1,44 +1,14 @@
-import { app, BrowserWindow, shell, protocol, ipcMain } from 'electron'
-import { createRequire } from 'node:module'
-import { fileURLToPath } from 'node:url'
+import { app, BrowserWindow, shell, protocol, ipcMain, session } from 'electron'
 import path from 'node:path'
 import os from 'node:os'
-import { __dirname, __static, RENDERER_DIST, VITE_DEV_SERVER_URL } from './common/constant'
-import { main } from './browsers/index';
+import { __dirname, __static } from './common/constant'
+import { main, panel } from './browsers/index';
 import commonConst from './utils/commonConst'
+import CursorMonitor from './utils/cursorMonitor'
 
+import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
 
-// Import iohook-raub in the main process where Node.js globals are available
-let iohook: any = null;
-let hmc: any = null
-try {
-  iohook = require('iohook-raub');
-  hmc = require('hmc-win32');
-} catch (error) {
-  console.error('Failed to load iohook-raub:', error);
-}
-// 以下变量设置放到common/constant.ts中
-// const __dirname = path.dirname(fileURLToPath(import.meta.url))
-// // The built directory structure
-// //
-// // ├─┬ dist-electron
-// // │ ├─┬ main
-// // │ │ └── index.js    > Electron-Main
-// // │ └─┬ preload
-// // │   └── index.mjs   > Preload-Scripts
-// // ├─┬ dist
-// // │ └── index.html    > Electron-Renderer
-// //
-// process.env.APP_ROOT = path.join(__dirname, '../..')
-
-// export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
-// export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
-// export const VITE_DEV_SERVER_URL = process.env.VITE_DEV_SERVER_URL
-
-// process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL
-//   ? path.join(process.env.APP_ROOT, 'public')
-//   : RENDERER_DIST
 
 // Disable GPU Acceleration for Windows 7
 if (os.release().startsWith('6.1')) app.disableHardwareAcceleration()
@@ -53,14 +23,24 @@ if (!app.requestSingleInstanceLock()) {
 
 class App {
   public windowCreator: { init: () => void; getWindow: () => BrowserWindow };
-  private systemPlugins: any;
-  private panelServer: any;
+  public panelWindowCreator: {
+    init: () => void;
+    getWindow: () => BrowserWindow;
+    loadUrl: (url: string) => void;
+    setCursorPos: (pos: {x: number, y: number}) => void;
+    getOriWidth: () => number;
+    getOriHeight: () => number;
+    destroy: () => void;
+  }
+  public cursorMonitor: CursorMonitor;
 
   constructor() {
     protocol.registerSchemesAsPrivileged([
       { scheme: 'app', privileges: { secure: true, standard: true } },
     ]);
     this.windowCreator = main();
+    this.panelWindowCreator = panel();
+    this.cursorMonitor = new CursorMonitor(this.panelWindowCreator);
     const gotTheLock = app.requestSingleInstanceLock();
     if (!gotTheLock) {
       app.quit();
@@ -87,13 +67,26 @@ class App {
 
   createWindow() {
     this.windowCreator.init();
+    this.panelWindowCreator.init();
+    this.cursorMonitor.startMonitor();
   }
   onReady() {
     const readyFunction = async () => {
       // checkVersion();
       // await localConfig.init();
+      
       this.createWindow();
       const mainWindow = this.windowCreator.getWindow();
+      session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+        callback({
+          responseHeaders: {
+            ...details.responseHeaders,
+            'Content-Security-Policy': [
+              "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'"
+            ]
+          }
+        })
+      })
       // API.init(mainWindow);
       // createTray(this.windowCreator.getWindow());
       // registerHotKey(this.windowCreator.getWindow());
@@ -103,20 +96,6 @@ class App {
       //     API,
       //   })
       // );
-      // 启动express服务， 监听19876端口
-      const express = require('express');
-      const cors = require('cors');
-      const panelApp = express();
-      panelApp.use(cors());
-      console.log('__static: ', path.join(__static, './panel_detach'));
-      panelApp.use(express.static(path.join(__static, './panel_detach')));
-      panelApp.get('/test', (req, res) => {
-        res.send('success');
-      });
-      this.panelServer = panelApp.listen(19875, () => {
-        console.log('Panel Server is running on port 19876');
-      });
-      
     };
     if (!app.isReady()) {
       app.on('ready', readyFunction);
@@ -174,11 +153,7 @@ class App {
       // globalShortcut.unregisterAll();
     });
 
-    if (this.panelServer) {
-      this.panelServer.close(() => {
-        console.log('Panel Server has been stopped.');
-      });
-    }
+    this.panelWindowCreator.destroy();
 
     if (commonConst.dev()) {
       if (process.platform === 'win32') {

@@ -1,2 +1,3 @@
 import main from './main';
-export { main };
+import panel from './panel';
+export { main, panel};

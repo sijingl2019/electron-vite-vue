@@ -1,14 +1,15 @@
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
-export const WINDOW_WIDTH = 800;
-export const WINDOW_HEIGHT = 60;
+export const WINDOW_WIDTH = 1000;
+export const WINDOW_HEIGHT = 600;
+export const WINDOW_MIN_WIDTH = 1000;
+export const WINDOW_MIN_HEIGHT = 600;
 export const WINDOW_PLUGIN_HEIGHT = 600;
 
 export const GUIDE_WIDTH = 800;
 export const GUIDE_HEIGHT = 600;
 
-export const WINDOW_MIN_HEIGHT = 60;
 export const CURSOR_IBEAM = "65543";
 export const DECODE_KEY = {
     Backspace: 'Backspace',
@@ -88,6 +89,10 @@ export const DECODE_KEY = {
     BracketRight: ']',
     Quote: "'",
   };
+export const DB_IDS = {
+  LOCAL: 'qiko-local-config',
+  LOCALHOST: 'qiko-localhost-config',
+}
 
 // The built directory structure
 //

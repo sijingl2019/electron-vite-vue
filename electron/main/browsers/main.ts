@@ -1,6 +1,6 @@
-import { app, BrowserWindow, shell, ipcMain, nativeTheme, protocol  } from 'electron'
+import { BrowserWindow, nativeTheme, protocol  } from 'electron'
 import path from 'node:path'
-import { WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_MIN_HEIGHT } from '../common/constant'
+import { WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_MIN_HEIGHT, WINDOW_MIN_WIDTH } from '../common/constant'
 import { __static, __dirname, RENDERER_DIST, VITE_DEV_SERVER_URL } from '../common/constant'
 
 export default () => {
@@ -18,13 +18,15 @@ export default () => {
     win = new BrowserWindow({
       height: WINDOW_HEIGHT,
       minHeight: WINDOW_MIN_HEIGHT,
+      width: WINDOW_WIDTH,
+      minWidth: WINDOW_MIN_WIDTH,
       useContentSize: true,
       resizable: true,
-      width: WINDOW_WIDTH,
-      frame: false,
-      title: 'Qiko',
+      frame: true,
+      title: 'Qiko Now',
+      autoHideMenuBar: true,
       show: true,
-      skipTaskbar: true,
+      skipTaskbar: false,
       backgroundColor: nativeTheme.shouldUseDarkColors ? '#1c1c28' : '#fff',
       webPreferences: {
         webSecurity: false,
@@ -35,6 +37,14 @@ export default () => {
         preload: preload,
         spellcheck: false,
       },
+    });
+    win.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+      callback({
+        responseHeaders: {
+          ...details.responseHeaders,
+          "Content-Security-Policy": ["default-src 'self'; script-src 'self' 'unsafe-eval';"]
+        }
+      });
     });
     if (VITE_DEV_SERVER_URL) { // #298
       win.loadURL(VITE_DEV_SERVER_URL)
@@ -66,9 +76,9 @@ export default () => {
     });
 
     // 判断失焦是否隐藏
-    win.on('blur', async () => {
-      win.hide();
-    });
+    // win.on('blur', async () => {
+    //   win.hide();
+    // });
   };
 
   const getWindow = () => win;

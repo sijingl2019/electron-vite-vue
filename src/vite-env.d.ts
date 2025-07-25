@@ -8,7 +8,7 @@ declare module '*.vue' {
 
 interface Window {
   // expose in the `electron/preload/index.ts`
-  ipcRenderer: import('electron').IpcRenderer
+  ipcRenderer: import('electron').IpcRenderer;
 }
 
 declare global {
@@ -26,6 +26,16 @@ declare global {
       onMousedown: (callback: (msg: any) => void) => void;
       onMouseup: (callback: (msg: any) => void) => void;
       removeAllListeners: (channel: string) => void;
+    };
+    qikodb: {
+      put: (data) => any,
+      get: (id) => any,
+      remove: (doc) => any,
+      bulkDocs: (docs) => any,
+      allDocs: (key) => any,
+      postAttachment: (docId, attachment, type) => any,
+      getAttachment: (docId) => any,
+      getAttachmentType: (docId) => any
     };
   }
 }
