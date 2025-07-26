@@ -15,7 +15,6 @@ export default () => {
   let currentVersion = getRandomInt(1, 1000000);
   let cursorX = 0;
   let cursorY = 0;
-  let isZeroTrust = false;
   let panelServer: any;
   const preload = path.join(__dirname, '../preload/panel.mjs')
   function getRandomInt(min, max) {
@@ -120,7 +119,7 @@ export default () => {
   };
 
   const loadUrl = async (text) => {
-    const url = isZeroTrust? `http://localhost:19875#/page/QZeroTrustPlugin?value=${text}}` : `http://localhost:19875#/page/QPlugin?value=${text}&qikoToken=${'123' || (currentVersion++ % 1000000)}`;
+    const url = `http://localhost:19875#/page/QZeroTrustPlugin?value=${text}}&qikoToken=${(currentVersion++ % 1000000)}`;
     // const url = 'https://www.baidu.com'
     console.log(url);
     // win.loadURL('about:blank');

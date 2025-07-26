@@ -67,7 +67,7 @@ class App {
 
   createWindow() {
     this.windowCreator.init();
-    this.panelWindowCreator.init();
+    // this.panelWindowCreator.init();
     this.cursorMonitor.startMonitor();
   }
   onReady() {
@@ -82,7 +82,7 @@ class App {
           responseHeaders: {
             ...details.responseHeaders,
             'Content-Security-Policy': [
-              "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'"
+              "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
             ]
           }
         })
