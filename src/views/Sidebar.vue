@@ -97,7 +97,7 @@ import {
 
 import {
   IChat,
-} from '../../intellichat/types';
+} from '../intellichat/types';
 
 const { t } = useI18n();
 

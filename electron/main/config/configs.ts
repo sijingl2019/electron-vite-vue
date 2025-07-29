@@ -1,8 +1,8 @@
 import defaultLocalConfig from '../common/defaultConfig';
-import DBInstance from '../common/db';
+import ConfigDBInstance from '../common/configdb';
 import { DB_IDS } from '../common/constant';
 
-const db = new DBInstance();
+const db = new ConfigDBInstance();
 
 class Config {
   private db_key: string;
@@ -20,14 +20,11 @@ class Config {
       localConfig.data.version !== this.default_config.version
     ) {
       const data: any = {
-        _id: this.db_key,
+        id: this.db_key,
         data: this.default_config,
       };
-      if (localConfig && localConfig._rev) {
-        data._rev = localConfig._rev;
-      }
       await db.dbPut({
-        data: { data },
+        data,
       });
     }
   }
@@ -43,13 +40,10 @@ class Config {
       (await db.dbGet({ data: { id: this.db_key } })) || {};
     await db.dbPut({
       data: {
+        id: this.db_key,
         data: {
-          _id: this.db_key,
-          _rev: localConfig._rev,
-          data: {
-            ...localConfig.data,
-            ...data,
-          },
+          ...localConfig.data,
+          ...data,
         },
       },
     });

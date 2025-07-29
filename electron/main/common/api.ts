@@ -10,27 +10,27 @@ import {
   shell,
 } from 'electron';
 import fs from 'node:fs';
-import os from 'node:os';
+// import os from 'node:os';
 import plist from 'plist';
-import DBInstance from './db';
+import ConfigDBInstance from './configdb';
 import getWinPosition from './getWinPosition'
 import commonConst from '../utils/commonConst';
-import { createRequire } from 'node:module'
-const require = createRequire(import.meta.url)
+import log from '../utils/log'
 
-const log = require('electron-log')
 const isMacOS = commonConst.macOS()
 function getPos(screen, point) {
   return isMacOS ? point : screen.screenToDipPoint({x: point.x, y: point.y});
 }
 let currentCopyText = '';
 
-class API extends DBInstance {
+class API extends ConfigDBInstance {
   async init(mainWindow: BrowserWindow) {
     // 响应 preload.js 事件
     ipcMain.on('msg-trigger', async (event, arg) => {
+      log.info(`arg type: ${arg.type}`)
       const window = arg.winId ? BrowserWindow.fromId(arg.winId) : mainWindow;
       const data = await this[arg.type](arg, window, event);
+      log.info('data', data);
       event.returnValue = data;
     });
   }
@@ -150,6 +150,10 @@ class API extends DBInstance {
 
   public getProductName() {
     return "QikoNow";
+  }
+
+  public isWindows() {
+    return commonConst.windows();
   }
 }
 

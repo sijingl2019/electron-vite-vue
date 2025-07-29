@@ -37,6 +37,9 @@ declare global {
       getAttachment: (docId) => any,
       getAttachmentType: (docId) => any
     };
+    qiko: {
+      isWindows: () => boolean
+    }
   }
 }
 

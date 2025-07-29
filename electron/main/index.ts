@@ -5,9 +5,15 @@ import { __dirname, __static } from './common/constant'
 import { main, panel } from './browsers/index';
 import commonConst from './utils/commonConst'
 import CursorMonitor from './utils/cursorMonitor'
+import API from './common/api'
+import { fileURLToPath } from 'node:url'
+import { dirname } from 'node:path';
+import configs from './config/configs'
 
 import { createRequire } from 'node:module'
 const require = createRequire(import.meta.url)
+globalThis.__filename = fileURLToPath(import.meta.url);
+globalThis.__dirname = dirname(__filename);
 
 
 // Disable GPU Acceleration for Windows 7
@@ -67,13 +73,14 @@ class App {
 
   createWindow() {
     this.windowCreator.init();
-    // this.panelWindowCreator.init();
+    this.panelWindowCreator.init();
     this.cursorMonitor.startMonitor();
   }
   onReady() {
     const readyFunction = async () => {
       // checkVersion();
-      // await localConfig.init();
+      await configs.localConfig.init();
+      await configs.localhostConfig.init();
       
       this.createWindow();
       const mainWindow = this.windowCreator.getWindow();
@@ -87,7 +94,7 @@ class App {
           }
         })
       })
-      // API.init(mainWindow);
+      API.init(mainWindow);
       // createTray(this.windowCreator.getWindow());
       // registerHotKey(this.windowCreator.getWindow());
       // this.systemPlugins.triggerReadyHooks(

@@ -8,18 +8,18 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-// import MarkdownIt from 'markdown-it';
+import MarkdownIt from 'markdown-it';
 import { useI18n } from 'vue-i18n';
 import { message } from 'ant-design-vue';
 const content = ref('');
 
 const { t } = useI18n();
 
-// const markdown = new MarkdownIt();
+const markdown = new MarkdownIt();
 onMounted(async () => {
   try {
-    // const mdContent = await window.qiko.readAboutMe();
-    // content.value = markdown.render(mdContent);
+    const mdContent = '1234';//await window.qikodb.readAboutMe();
+    content.value = markdown.render(mdContent);
   } catch (e) {
     content.value = '加载失败';
   }
@@ -34,7 +34,7 @@ onMounted(async () => {
   width: 100%;
   overflow-x: hidden;
   background: var(--color-body-bg2);
-  height: calc(~'100vh - 34px');
+  height: calc(~'100vh - 44px');
   position: relative;
 
   .view-container {

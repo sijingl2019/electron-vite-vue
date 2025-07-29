@@ -122,7 +122,7 @@ const handleMenuClick = (key: string) => {
 @import '../assets/var.less';
 
 .page-layout {
-  width: 100%;
+  width: calc(~'100vh - 240px');
   height: 100%;
   display: flex;
   flex-direction: column;

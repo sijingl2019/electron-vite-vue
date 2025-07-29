@@ -3,22 +3,22 @@
     <div class="view-container">
       <a-menu v-model:selectedKeys="currentSelect" mode="horizontal">
         <a-menu-item key="model">
-          {{ $t('feature.settings.model.title') }}
+          {{ $t("feature.settings.model.title") }}
         </a-menu-item>
         <a-menu-item key="userInfo">
-          {{ $t('feature.settings.account.accountInfo') }}
+          {{ $t("feature.settings.account.accountInfo") }}
         </a-menu-item>
         <a-menu-item key="normal">
-          {{ $t('feature.settings.basic.title') }}
+          {{ $t("feature.settings.basic.title") }}
         </a-menu-item>
         <a-menu-item key="panel">
-          {{ $t('feature.settings.toolPanel.title') }}
+          {{ $t("feature.settings.toolPanel.title") }}
         </a-menu-item>
         <a-menu-item key="localstart">
-          {{ $t('feature.settings.localstart.title') }}
+          {{ $t("feature.settings.localstart.title") }}
         </a-menu-item>
         <a-menu-item key="global">
-          {{ $t('feature.settings.global.title') }}
+          {{ $t("feature.settings.global.title") }}
         </a-menu-item>
         <!--        <a-menu-item key="superpanel">-->
         <!--          <template #icon>-->
@@ -30,20 +30,20 @@
           {{ $t('feature.settings.database.title') }}
         </a-menu-item> -->
         <a-menu-item key="localhost">
-          {{ $t('feature.settings.intranet.title') }}
+          {{ $t("feature.settings.intranet.title") }}
         </a-menu-item>
       </a-menu>
       <div class="settings-detail">
-        <ModelSettings v-if="currentSelect[0] === 'model'" />
+        <!-- <ModelSettings v-if="currentSelect[0] === 'model'" />
         <UserInfo v-if="currentSelect[0] === 'userInfo'" />
         <div v-if="currentSelect[0] === 'normal'">
           <div class="setting-item">
             <div class="title">
-              {{ $t('feature.settings.basic.shortcutKey') }}
+              {{ $t("feature.settings.basic.shortcutKey") }}
             </div>
             <div class="settings-item-li">
               <div class="label">
-                {{ $t('feature.settings.basic.showOrHiddle') }}
+                {{ $t("feature.settings.basic.showOrHiddle") }}
               </div>
               <a-tooltip placement="top" trigger="click">
                 <template #title>
@@ -54,18 +54,18 @@
                       style="cursor: pointer; text-decoration: underline"
                       @click="resetDefault('Alt')"
                     >
-                    Alt+Space
-                  </span>
+                      Alt+Space
+                    </span>
                     <span
                       style="
-                      cursor: pointer;
-                      margin-left: 8px;
-                      text-decoration: underline;
-                    "
+                        cursor: pointer;
+                        margin-left: 8px;
+                        text-decoration: underline;
+                      "
                       @click="resetDefault('Ctrl')"
                     >
-                    Ctrl+Space
-                  </span>
+                      Ctrl+Space
+                    </span>
                   </template>
                 </template>
                 <div
@@ -79,7 +79,7 @@
             </div>
             <div class="settings-item-li">
               <div class="label">
-                {{ $t('feature.settings.basic.screenCapture') }}
+                {{ $t("feature.settings.basic.screenCapture") }}
               </div>
               <a-tooltip placement="top" trigger="click">
                 <template #title>
@@ -96,10 +96,10 @@
             </div>
           </div>
           <div class="setting-item">
-            <div class="title">{{ $t('feature.settings.basic.common') }}</div>
+            <div class="title">{{ $t("feature.settings.basic.common") }}</div>
             <div class="settings-item-li">
               <div class="label">
-                {{ $t('feature.settings.basic.autoPaste') }}
+                {{ $t("feature.settings.basic.autoPaste") }}
               </div>
               <a-switch
                 v-model:checked="common.autoPast"
@@ -108,7 +108,9 @@
               ></a-switch>
             </div>
             <div class="settings-item-li">
-              <div class="label">{{ $t('feature.settings.basic.autoBoot') }}</div>
+              <div class="label">
+                {{ $t("feature.settings.basic.autoBoot") }}
+              </div>
               <a-switch
                 v-model:checked="common.start"
                 :checked-children="$t('feature.settings.basic.on')"
@@ -117,7 +119,7 @@
             </div>
             <div class="settings-item-li">
               <div class="label">
-                {{ $t('feature.settings.basic.spaceExec') }}
+                {{ $t("feature.settings.basic.spaceExec") }}
               </div>
               <a-switch
                 v-model:checked="common.space"
@@ -127,7 +129,7 @@
             </div>
             <div class="settings-item-li">
               <div class="label">
-                {{ $t('feature.settings.basic.history') }}
+                {{ $t("feature.settings.basic.history") }}
               </div>
               <a-switch
                 v-model:checked="common.history"
@@ -137,9 +139,11 @@
             </div>
           </div>
           <div class="setting-item">
-            <div class="title">{{ $t('feature.settings.basic.theme') }}</div>
+            <div class="title">{{ $t("feature.settings.basic.theme") }}</div>
             <div class="settings-item-li">
-              <div class="label">{{ $t('feature.settings.basic.darkMode') }}</div>
+              <div class="label">
+                {{ $t("feature.settings.basic.darkMode") }}
+              </div>
               <a-switch
                 v-model:checked="common.darkMode"
                 :checked-children="$t('feature.settings.basic.on')"
@@ -148,10 +152,10 @@
             </div>
           </div>
           <div class="setting-item">
-            <div class="title">{{ $t('feature.settings.basic.language') }}</div>
+            <div class="title">{{ $t("feature.settings.basic.language") }}</div>
             <div class="settings-item-li">
               <div class="label">
-                {{ $t('feature.settings.basic.changeLang') }}
+                {{ $t("feature.settings.basic.changeLang") }}
               </div>
               <a-select
                 v-model:value="state.common.lang"
@@ -170,10 +174,10 @@
               :header="$t('feature.settings.global.instructions')"
             >
               <div>
-                {{ $t('feature.settings.global.tips') }}
+                {{ $t("feature.settings.global.tips") }}
               </div>
               <h3 style="margin-top: 10px">
-                {{ $t('feature.settings.global.example') }}
+                {{ $t("feature.settings.global.example") }}
               </h3>
               <a-divider style="margin: 5px 0" />
               <a-list item-layout="horizontal" :data-source="examples">
@@ -191,7 +195,7 @@
           </a-collapse>
           <div class="feature-container">
             <div class="keywords item">
-              <div>{{ $t('feature.settings.global.shortcutKey') }}</div>
+              <div>{{ $t("feature.settings.global.shortcutKey") }}</div>
               <template :key="index" v-for="(item, index) in global">
                 <a-tooltip placement="top" trigger="click">
                   <template #title>
@@ -211,7 +215,7 @@
               </template>
             </div>
             <div class="short-cut item">
-              <div>{{ $t('feature.settings.global.funtionKey') }}</div>
+              <div>{{ $t("feature.settings.global.funtionKey") }}</div>
               <template v-for="(item, index) in global" :key="index">
                 <a-input
                   :value="item.value"
@@ -225,17 +229,17 @@
           </div>
           <div @click="addConfig" class="add-global">
             <PlusCircleOutlined />
-            {{ $t('feature.settings.global.addShortcutKey') }}
+            {{ $t("feature.settings.global.addShortcutKey") }}
           </div>
         </div>
         <div v-if="currentSelect[0] === 'panel'">
           <div class="setting-item">
             <div class="title">
-              {{ $t('feature.settings.basic.shortcutKey') }}
+              {{ $t("feature.settings.basic.shortcutKey") }}
             </div>
             <div class="settings-item-li">
               <div class="label">
-                {{ $t('feature.settings.basic.openPanel') }}
+                {{ $t("feature.settings.basic.openPanel") }}
               </div>
               <a-tooltip placement="top" trigger="click">
                 <template #title>
@@ -246,18 +250,18 @@
                       style="cursor: pointer; text-decoration: underline"
                       @click="resetDefault('Alt')"
                     >
-                    Alt+T
-                  </span>
+                      Alt+T
+                    </span>
                     <span
                       style="
-                      cursor: pointer;
-                      margin-left: 8px;
-                      text-decoration: underline;
-                    "
+                        cursor: pointer;
+                        margin-left: 8px;
+                        text-decoration: underline;
+                      "
                       @click="resetDefault('Ctrl')"
                     >
-                    Ctrl+T
-                  </span>
+                      Ctrl+T
+                    </span>
                   </template>
                 </template>
                 <div
@@ -270,12 +274,12 @@
               </a-tooltip>
             </div>
           </div>
-          
+
           <div class="setting-item">
-            <div class="title">{{ $t('feature.settings.basic.common') }}</div>
+            <div class="title">{{ $t("feature.settings.basic.common") }}</div>
             <div class="settings-item-li">
               <div class="label">
-                {{ $t('feature.settings.basic.autoOpenPanel') }}
+                {{ $t("feature.settings.basic.autoOpenPanel") }}
               </div>
               <a-switch
                 v-model:checked="common.autoOpenPanel"
@@ -285,14 +289,13 @@
             </div>
           </div>
           <div class="setting-item">
-            <div class="title">{{ $t('feature.settings.toolPanel.panelForbidApps') }}</div>
+            <div class="title">
+              {{ $t("feature.settings.toolPanel.panelForbidApps") }}
+            </div>
             <div class="feature-container">
               <div class="keywords item">
                 <template :key="index" v-for="(item, index) in forbidApps">
-                  <div
-                    class="value"
-                    tabIndex="2"
-                  >
+                  <div class="value" tabIndex="2">
                     {{ item }}
                     <MinusCircleOutlined
                       @click.stop="deleteForbidApp(e, index)"
@@ -303,9 +306,9 @@
             </div>
           </div>
         </div>
-        
+
         <LocalDeploy v-if="currentSelect[0] === 'localhost'" />
-        <LocalStart v-if="currentSelect[0] === 'localstart'" />
+        <LocalStart v-if="currentSelect[0] === 'localstart'" /> -->
       </div>
     </div>
   </div>
@@ -321,16 +324,24 @@ import {
   MenuUnfoldOutlined,
   UserOutlined,
   SafetyOutlined,
-} from '@ant-design/icons-vue';
-import debounce from 'lodash.debounce';
-import { ref, reactive, watch, toRefs, computed, defineProps, defineEmits } from 'vue';
-import keycodes from './keycode';
-import UserInfo from './UserInfo.vue';
-import LocalStart from './LocalStart.vue';
-import LocalDeploy from './LocalDeploy.vue';
-import ModelSettings from './ModelSettings.vue';
-import { useI18n } from 'vue-i18n';
-import localConfig from '../../confOp';
+} from "@ant-design/icons-vue";
+import debounce from "lodash.debounce";
+import {
+  ref,
+  reactive,
+  watch,
+  toRefs,
+  computed,
+  defineProps,
+  defineEmits,
+} from "vue";
+import keycodes from "./keycode";
+// import UserInfo from "./UserInfo.vue";
+// import LocalStart from "./LocalStart.vue";
+// import LocalDeploy from "./LocalDeploy.vue";
+// import ModelSettings from "./ModelSettings.vue";
+import { useI18n } from "vue-i18n";
+import localConfig from "../../confOp";
 
 // const props = defineProps({
 //   showSidebar: {
@@ -338,19 +349,19 @@ import localConfig from '../../confOp';
 //     default: true,
 //   },
 // });
-const emit = defineEmits(['toggle-sidebar']);
+const emit = defineEmits(["toggle-sidebar"]);
 const { locale, t } = useI18n();
 
 // const { ipcRenderer } = window.require('electron');
 
 const examples = [
   {
-    title: t('feature.settings.global.example1'),
-    desc: t('feature.settings.global.tips1'),
+    title: t("feature.settings.global.example1"),
+    desc: t("feature.settings.global.tips1"),
   },
   {
-    title: t('feature.settings.global.example2'),
-    desc: t('feature.settings.global.tips2'),
+    title: t("feature.settings.global.example2"),
+    desc: t("feature.settings.global.tips2"),
   },
 ];
 
@@ -364,66 +375,69 @@ const state = reactive({
 });
 
 const isWindows = window?.qiko?.isWindows();
-const tipText = computed(() => {
-  const optionKeyName = isWindows ? 'Alt' : 'Option、Command';
-  return t('feature.settings.global.addShortcutKeyTips', {
-    optionKeyName: optionKeyName,
-  });
-});
+// const tipText = computed(() => {
+//   const optionKeyName = isWindows ? "Alt" : "Option、Command";
+//   return t("feature.settings.global.addShortcutKeyTips", {
+//     optionKeyName: optionKeyName,
+//   });
+// });
+const currentSelect = ref(["model"]);
 
-const currentSelect = ref(['model']);
+// const {
+//   perf,
+//   global: defaultGlobal,
+//   panelForbidApps,
+// } = localConfig.getConfig();
 
-const { perf, global: defaultGlobal, panelForbidApps } = localConfig.getConfig();
+// state.shortCut = perf.shortCut;
+// state.custom = perf.custom;
+// state.common = perf.common;
+// state.local = perf.local;
+// state.global = defaultGlobal;
+// state.forbidApps = panelForbidApps;
 
-state.shortCut = perf.shortCut;
-state.custom = perf.custom;
-state.common = perf.common;
-state.local = perf.local;
-state.global = defaultGlobal;
-state.forbidApps = panelForbidApps;
+// const setConfig = debounce(() => {
+//   const { perf } = localConfig.getConfig();
+//   localConfig.setConfig(
+//     JSON.parse(
+//       JSON.stringify({
+//         perf: {
+//           ...perf,
+//           shortCut: state.shortCut,
+//           common: state.common,
+//           local: state.local,
+//         },
+//         global: state.global,
+//         panelForbidApps: state.forbidApps,
+//       })
+//     )
+//   );
+//   // ipcRenderer.send('re-register');
+// }, 500);
 
-const setConfig = debounce(() => {
-  const { perf } = localConfig.getConfig();
-  localConfig.setConfig(
-    JSON.parse(
-      JSON.stringify({
-        perf: {
-          ...perf,
-          shortCut: state.shortCut,
-          common: state.common,
-          local: state.local,
-        },
-        global: state.global,
-        panelForbidApps: state.forbidApps,
-      })
-    )
-  );
-  // ipcRenderer.send('re-register');
-}, 500);
-
-watch(state, setConfig);
+// watch(state, setConfig);
 
 const changeShortCut = (e, key) => {
-  let compose = '';
+  let compose = "";
   // 添加是否包含功能键的判断
   let incluFuncKeys = false;
   if (e.ctrlKey && e.keyCode !== 17) {
-    compose += '+Ctrl';
+    compose += "+Ctrl";
     incluFuncKeys = true;
   }
   if (e.shiftKey && e.keyCode !== 16) {
-    compose += '+Shift';
+    compose += "+Shift";
     incluFuncKeys = true;
   }
   if (e.altKey && e.keyCode !== 18) {
-    compose += '+Option';
+    compose += "+Option";
     incluFuncKeys = true;
   }
   if (e.metaKey && e.keyCode !== 93) {
-    compose += '+Command';
+    compose += "+Command";
     incluFuncKeys = true;
   }
-  compose += '+' + keycodes[e.keyCode].toUpperCase();
+  compose += "+" + keycodes[e.keyCode].toUpperCase();
   compose = compose.substring(1);
   if (
     incluFuncKeys &&
@@ -439,26 +453,26 @@ const changeShortCut = (e, key) => {
 };
 
 const changeGlobalKey = (e, index) => {
-  let compose = '';
+  let compose = "";
   // 添加是否包含功能键的判断
   let incluFuncKeys = false;
   if (e.ctrlKey && e.keyCode !== 17) {
-    compose += '+Ctrl';
+    compose += "+Ctrl";
     incluFuncKeys = true;
   }
   if (e.shiftKey && e.keyCode !== 16) {
-    compose += '+Shift';
+    compose += "+Shift";
     incluFuncKeys = true;
   }
   if (e.altKey && e.keyCode !== 18) {
-    compose += '+Option';
+    compose += "+Option";
     incluFuncKeys = true;
   }
   if (e.metaKey && e.keyCode !== 93) {
-    compose += '+Command';
+    compose += "+Command";
     incluFuncKeys = true;
   }
-  compose += '+' + keycodes[e.keyCode].toUpperCase();
+  compose += "+" + keycodes[e.keyCode].toUpperCase();
   compose = compose.substring(1);
   if (
     incluFuncKeys &&
@@ -480,12 +494,12 @@ const changeGlobalKey = (e, index) => {
 
 const resetDefault = (key) => {
   switch (key) {
-    case 'Alt':
-      state.shortCut['showAndHidden'] = 'Option+SPACE';
+    case "Alt":
+      state.shortCut["showAndHidden"] = "Option+SPACE";
       // copyValue.value = "Option+SPACE";
       break;
-    case 'Ctrl':
-      state.shortCut['showAndHidden'] = 'Ctrl+SPACE';
+    case "Ctrl":
+      state.shortCut["showAndHidden"] = "Ctrl+SPACE";
       // copyValue.value = "Ctrl+SPACE";
       break;
     default:
@@ -507,16 +521,16 @@ const deleteGlobalKey = (e, index) => {
 const deleteForbidApp = (e, index) => {
   const name = state.forbidApps[index];
   state.forbidApps.splice(index, 1);
-  ipcRenderer.send('msg-trigger', {
-    type: 'reopenCurrent',
+  ipcRenderer.send("msg-trigger", {
+    type: "reopenCurrent",
     name: name,
   });
 };
 
 const addConfig = () => {
   state.global.push({
-    key: '',
-    value: '',
+    key: "",
+    value: "",
   });
 };
 
@@ -524,12 +538,12 @@ const { shortCut, common, local, global, forbidApps } = toRefs(state);
 
 const options = ref([
   {
-    value: 'zh-CN',
-    label: t('feature.settings.basic.cn'),
+    value: "zh-CN",
+    label: t("feature.settings.basic.cn"),
   },
   {
-    value: 'en-US',
-    label: t('feature.settings.basic.en'),
+    value: "en-US",
+    label: t("feature.settings.basic.en"),
   },
 ]);
 
@@ -537,18 +551,17 @@ const changeLanguage = (value) => {
   state.common.lang = value.key;
   locale.value = value.key;
 };
-
 </script>
 
 <style lang="less">
-@import '../../assets/var.less';
+@import "../../assets/var.less";
 
 .settings {
   box-sizing: border-box;
   width: 100%;
   overflow-x: hidden;
   background: var(--color-body-bg2);
-  height: calc(~'100vh - 34px');
+  height: calc(~"100vh - 44px");
 
   .ant-menu-horizontal {
     border-bottom: 1px solid var(--color-border-light);
@@ -563,7 +576,7 @@ const changeLanguage = (value) => {
     border-radius: 8px;
     background: var(--color-body-bg);
     overflow: auto;
-    height: calc(~'100vh - 84px');
+    height: calc(~"100vh - 84px");
   }
   .ant-menu {
     background: var(--color-body-bg) !important;
@@ -630,7 +643,8 @@ const changeLanguage = (value) => {
           background: var(--color-input-hover) !important;
           color: var(--color-text-content);
         }
-        .ant-input-password-icon, .ant-select-arrow {
+        .ant-input-password-icon,
+        .ant-select-arrow {
           color: var(--color-action-color);
         }
       }

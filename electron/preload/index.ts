@@ -70,6 +70,11 @@ contextBridge.exposeInMainWorld('qikodb', {
     ipcSendSync('dbPostAttachment', { docId, attachment, type }),
   getAttachment: (docId) => ipcSendSync('dbGetAttachment', { docId }),
   getAttachmentType: (docId) => ipcSendSync('dbGetAttachmentType', { docId }),
+});
+contextBridge.exposeInMainWorld('qiko', {
+  isWindows: () => {
+    return ipcSendSync('isWindows')
+  }
 })
 
 // // --------- Preload scripts loading ---------

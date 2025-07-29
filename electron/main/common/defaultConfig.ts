@@ -9,7 +9,7 @@ export default {
       warningColor: '#e5a84b',
       successColor: '#c0d695',
       infoColor: '#355fc7',
-      logo: `file://${__static}/logo.png`,
+      // logo: `file://${__static}/logo.png`,
       placeholder: '你好，Qiko！请输入模型关键词',
       username: 'Qiko',
       monitor: true,

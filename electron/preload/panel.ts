@@ -44,8 +44,8 @@ const ipcSendSync = (type, data) => {
 //   observer.observe(document.body, { childList: true, subtree: true });
 // });
 
-// const dbdata = ipcSendSync('dbGet', { id: 'qiko-localhost-config' });
-const dbdata = {}
+const dbdata = ipcSendSync('dbGet', { id: 'qiko-localhost-config' });
+// const dbdata = {}
 console.log('dbdata', dbdata);
 const defaultConfig = dbdata?.data || {};
 const qiko_server = defaultConfig.qiko_server? defaultConfig.qiko_server.replace(/\/+$/, '') : 'https://chat.qkos.cn';

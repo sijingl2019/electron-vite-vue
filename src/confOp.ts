@@ -3,7 +3,7 @@ const LOCAL_CONFIG_KEY = 'qiko-local-config';
 const localConfig = {
   getConfig(): Promise<any> {
     const data: any = window.qikodb.get(LOCAL_CONFIG_KEY) || {};
-    return data.data;
+    return data;
   },
 
   setConfig(data: any) {
