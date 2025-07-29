@@ -14,27 +14,18 @@
         <a-menu-item key="panel">
           {{ $t("feature.settings.toolPanel.title") }}
         </a-menu-item>
-        <a-menu-item key="localstart">
+        <!-- <a-menu-item key="localstart">
           {{ $t("feature.settings.localstart.title") }}
-        </a-menu-item>
+        </a-menu-item> -->
         <a-menu-item key="global">
           {{ $t("feature.settings.global.title") }}
         </a-menu-item>
-        <!--        <a-menu-item key="superpanel">-->
-        <!--          <template #icon>-->
-        <!--            <FileAddOutlined />-->
-        <!--          </template>-->
-        <!--          {{ $t('feature.settings.superPanel.title') }}-->
-        <!--        </a-menu-item>-->
-        <!-- <a-menu-item key="database">
-          {{ $t('feature.settings.database.title') }}
-        </a-menu-item> -->
         <a-menu-item key="localhost">
           {{ $t("feature.settings.intranet.title") }}
         </a-menu-item>
       </a-menu>
       <div class="settings-detail">
-        <!-- <ModelSettings v-if="currentSelect[0] === 'model'" />
+        <ModelSettings v-if="currentSelect[0] === 'model'" />
         <UserInfo v-if="currentSelect[0] === 'userInfo'" />
         <div v-if="currentSelect[0] === 'normal'">
           <div class="setting-item">
@@ -308,7 +299,7 @@
         </div>
 
         <LocalDeploy v-if="currentSelect[0] === 'localhost'" />
-        <LocalStart v-if="currentSelect[0] === 'localstart'" /> -->
+        <!-- <LocalStart v-if="currentSelect[0] === 'localstart'" /> -->
       </div>
     </div>
   </div>
@@ -336,19 +327,19 @@ import {
   defineEmits,
 } from "vue";
 import keycodes from "./keycode";
-// import UserInfo from "./UserInfo.vue";
+import UserInfo from "./UserInfo.vue";
 // import LocalStart from "./LocalStart.vue";
-// import LocalDeploy from "./LocalDeploy.vue";
-// import ModelSettings from "./ModelSettings.vue";
+import LocalDeploy from "./LocalDeploy.vue";
+import ModelSettings from "./ModelSettings.vue";
 import { useI18n } from "vue-i18n";
 import localConfig from "../../confOp";
 
-// const props = defineProps({
-//   showSidebar: {
-//     type: Boolean,
-//     default: true,
-//   },
-// });
+const props = defineProps({
+  showSidebar: {
+    type: Boolean,
+    default: true,
+  },
+});
 const emit = defineEmits(["toggle-sidebar"]);
 const { locale, t } = useI18n();
 
@@ -383,39 +374,39 @@ const isWindows = window?.qiko?.isWindows();
 // });
 const currentSelect = ref(["model"]);
 
-// const {
-//   perf,
-//   global: defaultGlobal,
-//   panelForbidApps,
-// } = localConfig.getConfig();
+const {
+  perf,
+  global: defaultGlobal,
+  panelForbidApps,
+} = localConfig.getConfig();
 
-// state.shortCut = perf.shortCut;
-// state.custom = perf.custom;
-// state.common = perf.common;
-// state.local = perf.local;
-// state.global = defaultGlobal;
-// state.forbidApps = panelForbidApps;
+state.shortCut = perf.shortCut;
+state.custom = perf.custom;
+state.common = perf.common;
+state.local = perf.local;
+state.global = defaultGlobal;
+state.forbidApps = panelForbidApps;
 
-// const setConfig = debounce(() => {
-//   const { perf } = localConfig.getConfig();
-//   localConfig.setConfig(
-//     JSON.parse(
-//       JSON.stringify({
-//         perf: {
-//           ...perf,
-//           shortCut: state.shortCut,
-//           common: state.common,
-//           local: state.local,
-//         },
-//         global: state.global,
-//         panelForbidApps: state.forbidApps,
-//       })
-//     )
-//   );
-//   // ipcRenderer.send('re-register');
-// }, 500);
+const setConfig = debounce(() => {
+  const { perf } = localConfig.getConfig();
+  localConfig.setConfig(
+    JSON.parse(
+      JSON.stringify({
+        perf: {
+          ...perf,
+          shortCut: state.shortCut,
+          common: state.common,
+          local: state.local,
+        },
+        global: state.global,
+        panelForbidApps: state.forbidApps,
+      })
+    )
+  );
+  // ipcRenderer.send('re-register');
+}, 500);
 
-// watch(state, setConfig);
+watch(state, setConfig);
 
 const changeShortCut = (e, key) => {
   let compose = "";

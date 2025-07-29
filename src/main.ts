@@ -22,6 +22,9 @@ import {
   Modal,
   Result,
   Spin,
+  Tag,
+  Slider,
+  InputNumber,
 } from 'ant-design-vue';
 import App from './App.vue'
 import router from './router/index';
@@ -80,6 +83,9 @@ createApp(App)
   .use(Modal)
   .use(Result)
   .use(Spin)
+  .use(Tag)
+  .use(Slider)
+  .use(InputNumber)
   .use(router)
   .use(Vue3Lottie)
   .mount('#app')

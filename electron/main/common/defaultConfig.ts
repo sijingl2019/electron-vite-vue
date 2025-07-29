@@ -48,4 +48,26 @@ export default {
     { key: 'Option+U', value: '智能体宇宙' },
   ],
   panelForbidApps: [],
+  localDeploy: {
+    register: 'https://registry.npmmirror.com',
+    database: 'https://gitee.com/monkeyWang/rubickdatabase/raw/master',
+    qiko_server: 'https://chat.qkos.cn/',
+    deepseek_id: 'fde60fa3-9f54-4a30-a17c-9979fb6c406c',
+    access_token: '',
+  },
+  llm: {
+    defaultProvider: 'OpenAI',
+    defaultPrompt: "You are a helpful assistant. You can help me by answering my questions. You can also ask me questions."
+  },
+  modelSettings: {
+    OpenAI: {
+      provider: 'OpenAI',
+      key: '',
+      base: 'https://api.openai.com/v1',
+      model: 'gpt-4o',
+      maxCtxMessages: 10,
+      temperature: 1,
+      topP: 1,
+    },
+  },
 };

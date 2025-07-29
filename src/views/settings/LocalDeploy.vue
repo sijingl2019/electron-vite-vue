@@ -70,24 +70,17 @@
 <script lang="ts" setup>
 import { ref, toRaw } from 'vue';
 import { message } from 'ant-design-vue';
-
-let _rev: any;
+import localConfig from '../../confOp';
+import debounce from 'lodash.debounce';
+const { localDeploy } = localConfig.getConfig();
 
 let defaultConfig = {
-  register: 'https://registry.npm.taobao.org',
-  database: 'https://gitee.com/monkeyWang/rubickdatabase/raw/master',
-  qiko_server: 'https://chat.qkos.cn',
-  deepseek_id: 'fde60fa3-9f54-4a30-a17c-9979fb6c406c',
-  access_token: '',
+  register: localDeploy.register || 'https://registry.npm.taobao.org',
+  database: localDeploy.database || 'https://gitee.com/monkeyWang/rubickdatabase/raw/master',
+  qiko_server: localDeploy.qiko_server || 'https://chat.qkos.cn',
+  deepseek_id: localDeploy.deepseek_id || 'fde60fa3-9f54-4a30-a17c-9979fb6c406c',
+  access_token: localDeploy.access_token || '',
 };
-
-try {
-  const dbdata = window.qikodb.get('qiko-localhost-config');
-  defaultConfig = dbdata.data;
-  _rev = dbdata._rev;
-} catch (e) {
-  // ignore
-}
 
 const formState = ref(JSON.parse(JSON.stringify(defaultConfig)));
 
@@ -104,25 +97,32 @@ const layout = {
 
 const resetForm = () => {
   formState.value = {
-    register: 'https://registry.npmmirror.com',
-    database: 'https://gitee.com/monkeyWang/rubickdatabase/raw/master',
-    qiko_server: 'https://chat.qkos.cn/',
-    deepseek_id: 'fde60fa3-9f54-4a30-a17c-9979fb6c406c',
-    access_token: '',
+    register: localDeploy.register || 'https://registry.npm.taobao.org',
+    database: localDeploy.database || 'https://gitee.com/monkeyWang/rubickdatabase/raw/master',
+    qiko_server: localDeploy.qiko_server || 'https://chat.qkos.cn',
+    deepseek_id: localDeploy.deepseek_id || 'fde60fa3-9f54-4a30-a17c-9979fb6c406c',
+    access_token: localDeploy.access_token || '',
   };
 };
 
+const setConfig = debounce(() => {
+  const { localDeploy } = localConfig.getConfig();
+
+  localConfig.setConfig(
+    JSON.parse(
+      JSON.stringify({
+        localDeploy: {
+          ...localDeploy,
+          ...formState.value,
+        },
+      })
+    )
+  );
+  // ipcRenderer.send('re-register');
+}, 500);
+
 const submit = () => {
-  const changeData: any = {
-    _id: 'qiko-localhost-config',
-    data: toRaw(formState.value),
-  };
-
-  if (_rev) {
-    changeData._rev = _rev;
-  }
-
-  window.qikodb.put(changeData);
+  setConfig();
   message.success('设置成功！重启插件市场并重新登录后生效！');
 };
 </script>
